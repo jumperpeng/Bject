@@ -52,6 +52,20 @@
                                 @enderror
                             </div>
                         </div>
+                        @auth
+                            @if ((Auth::user()->role_id) == 1)
+                            <div class="form-group row">
+                                <label for="role_id" class="col-md-4 col-form-label text-md-right">{{ __('Select Type') }}</label>
+                                <div class="dropdown show col-md-6">
+                                    <select class="form-control ">
+                                        <option> -- Select Role --</option>
+                                        <option id="role_id" name="role_id" value="1">Administrator</option>
+                                        <option id="role_id" name="role_id" value="0">Employee</option>
+                                    </select>
+                                </div>
+                            </div>
+                            @endif
+                        @endauth
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
