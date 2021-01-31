@@ -32,7 +32,25 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
-                @guest
+
+                @guest()
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('user.logins') }}">{{ __('Login') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </li>
+                @else
+                    <h1>Gucvk</h1>
+                @endguest
+
+
+
+
+
+
+
+                {{-- @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -45,16 +63,14 @@
                         </li>
                     @endif
 
-                    @else
-                        @if ((Auth::user()->role_id) == 1)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Create Account') }}</a>
-                            </li>
-                        @endif
+                @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="/account">{{ __('Account') }}</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                                {{ Auth::guard()->user()->name }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -68,7 +84,8 @@
                                 </form>
                             </div>
                         </li>
-                @endguest
+                @endguest --}}
+
             </ul>
         </div>
     </div>

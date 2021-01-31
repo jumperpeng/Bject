@@ -52,6 +52,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         @auth
                             @if ((Auth::user()->role_id) == 1)
                             <div class="form-group row">
@@ -65,7 +66,15 @@
                                 </div>
                             </div>
                             @endif
+
+                            @else
+                            <input type="hidden" id="role_id" name="role_id" value="0">
+
                         @endauth
+
+
+
+
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
