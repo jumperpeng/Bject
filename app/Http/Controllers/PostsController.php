@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Admin;
 
 class PostsController extends Controller
 {
@@ -42,9 +45,24 @@ class PostsController extends Controller
         ]);
 
         $post = new Post();
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
-        $post->save();
+
+        if(Auth::guard('admin')->check()){
+
+            $admin = Auth::guard('admin')->user()->id;
+            $post->title = $request->input('title');
+            $post->body = $request->input('body');
+            $post->post_id = 'A' . $admin;
+            $post->save();
+
+        }else{
+
+            $user = Auth::guard('user')->user()->id;
+
+            $post->title = $request->input('title');
+            $post->body = $request->input('body');
+            $post->post_id = 'U' . $user;
+            $post->save();
+        }
 
         return redirect('posts')->with('success', 'Post Successfuly Created');
     }

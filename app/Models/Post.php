@@ -10,6 +10,8 @@ class Post extends Model
     use HasFactory;
 
     protected $table = 'posts';
+
     public $primary_key = 'id';
+
     public $timestamps = true;
 }

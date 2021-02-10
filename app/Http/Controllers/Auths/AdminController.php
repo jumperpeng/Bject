@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class AdminController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $guardName = 'user';
+    protected $guardName = 'admin';
     protected $maxAttempts = 3;
     // protected $decayMinutes = 2;
 
@@ -19,12 +19,12 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:user')->except('logout');
-        $this->loginRoute = route('user.login');
+        $this->middleware('guest:admin')->except('logout');
+        $this->loginRoute = route('admin.login');
     }
     public function login_form (){
 
-        return View('auth.Userlogin');
+        return View('auth.Adminlogin');
 
     }
 
@@ -45,7 +45,7 @@ class UserController extends Controller
             'password' => $request->password
         ];
 
-        if (Auth::guard('user')->attempt($credential_email) || Auth::guard('user')->attempt($credential_username) ) {
+        if (Auth::guard('admin')->attempt($credential_email) || Auth::guard('admin')->attempt($credential_username)) {
 
             $request->session()->regenerate();
 
@@ -54,7 +54,7 @@ class UserController extends Controller
         }else{
 
             $this->incrementLoginAttempts($request);
-            return redirect()->route('user.logins')->with('error', 'Email and Password are wrong');
+            return redirect()->route('admin.logins')->with('error', 'Email and Password are wrong');
         }
 
     }
@@ -62,6 +62,7 @@ class UserController extends Controller
     public function logout(Request $request){
         Auth::guard($this->guardName)->logout();
         $request->session()->flush();
-        return redirect()->guest($this->loginRoute);
+        return redirect()->route('home');
+
     }
 }

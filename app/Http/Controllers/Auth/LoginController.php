@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -39,26 +39,4 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
-    public function login(Request $request){
-
-        $input = $request->all();
-
-        $this->validate($request, [
-            'username' => 'required',
-            'password' => 'required',
-
-        ]);
-
-        $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-        if(Auth::attempt([$fieldType => $input['username'], 'password' => $input['password']])){
-
-            return redirect()->route('home');
-        }else{
-            return redirect()->route('login')->with('error', 'Email and Password are wrong');
-        }
-
-    }
-
 }
